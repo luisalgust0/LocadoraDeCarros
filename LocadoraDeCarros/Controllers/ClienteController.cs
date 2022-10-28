@@ -27,7 +27,8 @@ namespace LocadoraDeCarros.Controllers
         public ActionResult Index()
         {
             var listaCliente = _clienteService.ObterListaCliente();
-            return View(_mapper.Map<List<ClienteViewModel>>(listaCliente));
+            List<ClienteViewModel> listaClienteVm = _mapper.Map<List<ClienteViewModel>>(listaCliente);
+            return View(listaClienteVm);
         }
 
         // GET: ClienteController/Details/5
