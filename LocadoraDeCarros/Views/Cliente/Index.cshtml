@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LocadoraDeCarros.Models.ClienteViewModel>
+﻿@using LocadoraDeCarros.Models.Base
+@model ListaViewModel<ClienteViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,37 +8,22 @@
 <h1>View</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary" id="table">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="Dtable">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Endereco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CartaoDeCredito)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarteiraDeMotorista)
-            </th>
+            <th scope="col">Id</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Endereco</th>
+            <th scope="col">Carteira de Motorista</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Lista) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -55,15 +41,22 @@
                 @Html.DisplayFor(modelItem => item.Endereco)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CartaoDeCredito)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.CarteiraDeMotorista)
             </td>
             <td>
-
+                <a asp-action="Edit" asp-route-id=@item.Id class="btn btn-success">Editar</a>
+                <a asp-action="Delete" asp-route-id=@item.Id class="btn btn-danger">Excluir</a>
+                <a asp-action="Details" asp-route-id=@item.Id class="btn btn-primary">Detalhes</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#Dtable').DataTable();
+        });
+    </script>
+} 

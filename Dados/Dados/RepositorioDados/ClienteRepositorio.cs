@@ -6,6 +6,7 @@ using System.Text;
 using AutoMapper;
 using Dados.Models;
 using Dados.Contexts;
+using System.Linq;
 
 namespace Dados.RepositorioDados
 {
@@ -20,46 +21,42 @@ namespace Dados.RepositorioDados
             _context = context;
         }
 
-        public bool DeletarCliente(int id)
+        public bool DeletarCliente(Cliente clienteDeletar)
         {
-            // logica de acesso a dados
+            ClienteModel clienteDeletarModel = _mapper.Map<ClienteModel>(clienteDeletar);
+            _context.Cliente.Remove(clienteDeletarModel);
+            _context.SaveChanges();
             return true;
         }
 
         public bool EditarCliente(Cliente clienteEditar)
         {
-            _mapper.Map<ClienteModel>(clienteEditar);
-            //logica de acesso a dados
-
+            ClienteModel clienteModelEditar = _mapper.Map<ClienteModel>(clienteEditar);
+            _context.Cliente.Update(clienteModelEditar);
+            _context.SaveChanges();
             return true;
         }
 
         public bool InserirCliente(Cliente novoCliente)
         {
-            _mapper.Map<ClienteModel>(novoCliente);
-            // logica de acesso a dados
-
+            _context.Add(_mapper.Map<ClienteModel>(novoCliente));
+            _context.SaveChanges();
             return true;
         }
 
         public Cliente ObterClientePorEmail(string email)
         {
-            ClienteModel clienteModel = new ClienteModel();
-            // logica de acesso a dados
-            return _mapper.Map<Cliente>(clienteModel);
+            return _mapper.Map<Cliente>(_context.Cliente.FirstOrDefault(cliente => cliente.Email == email));
         }
 
         public Cliente ObterClientePorId(int id)
-        {
-            ClienteModel clienteModel = new ClienteModel();
-            // logica de acesso a dados
-            return _mapper.Map<Cliente>(clienteModel);
+        {            
+            return _mapper.Map<Cliente>(_context.Cliente.FirstOrDefault(cliente => cliente.Id == id));
         }
 
         public List<Cliente> ObterListaCliente()
         {
-            List<ClienteModel> listaClienteModel = new List<ClienteModel>();
-            return _mapper.Map<List<Cliente>>(listaClienteModel);
+            return _mapper.Map<List<Cliente>>(_context.Cliente.AsEnumerable());
         }
     }
 }

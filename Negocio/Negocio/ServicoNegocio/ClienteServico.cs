@@ -15,9 +15,9 @@ namespace Negocio.ServicoNegocio.Base
             _clienteRepositorio = clienteRepositorio;
         }
 
-        public bool DeletarCliente(int id)
+        public bool DeletarCliente(Cliente clienteDeletar)
         {
-            return _clienteRepositorio.DeletarCliente(id);
+            return _clienteRepositorio.DeletarCliente(clienteDeletar);
         }
 
         public bool EditarCliente(Cliente clienteEditar)

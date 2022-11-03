@@ -13,6 +13,6 @@ namespace Negocio.RepositorioNegocio
         List<Cliente> ObterListaCliente();
         bool InserirCliente(Cliente novoCliente);
         bool EditarCliente(Cliente clienteEditar);
-        bool DeletarCliente(int id);
+        bool DeletarCliente(Cliente clienteDeletar);
     }
 }

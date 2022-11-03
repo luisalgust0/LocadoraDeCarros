@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using LocadoraDeCarros.Models;
 using Negocio.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using LocadoraDeCarros.Models.Base;
 
 namespace LocadoraDeCarros.Controllers
 {
@@ -16,9 +18,9 @@ namespace LocadoraDeCarros.Controllers
     public class ClienteController : Controller
     {
         private readonly IClienteServico _clienteService;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
 
-        public ClienteController(IClienteServico clienteService,Mapper mapper)
+        public ClienteController(IClienteServico clienteService,IMapper mapper)
         {
             _clienteService = clienteService;
             _mapper = mapper;
@@ -26,9 +28,10 @@ namespace LocadoraDeCarros.Controllers
         // GET: ClienteController
         public ActionResult Index()
         {
-            var listaCliente = _clienteService.ObterListaCliente();
-            List<ClienteViewModel> listaClienteVm = _mapper.Map<List<ClienteViewModel>>(listaCliente);
-            return View(listaClienteVm);
+            List<ClienteViewModel> ClienteVm = _mapper.Map<List<ClienteViewModel>>(_clienteService.ObterListaCliente());
+            var lista = new ListaViewModel<ClienteViewModel>();
+            lista.Lista = ClienteVm; 
+            return View(lista);
         }
 
         // GET: ClienteController/Details/5
@@ -47,25 +50,33 @@ namespace LocadoraDeCarros.Controllers
 
         // POST: ClienteController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(ClienteViewModel novoClienteVM)
         {
             try
             {
-                var novoCliente = _mapper.Map<Cliente>(novoClienteVM);
-                if (_clienteService.InserirCliente(novoCliente))
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction(nameof(Index));
+                    var novoCliente = _mapper.Map<Cliente>(novoClienteVM);
+
+                    if (_clienteService.InserirCliente(novoCliente))
+                    {
+                        novoClienteVM.Tipo = TipoAlerta.sucesso;
+                        novoClienteVM.Alert = "Inserido com sucesso";
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
                 else
-                    return View(novoClienteVM);             
+                    novoClienteVM.Tipo = TipoAlerta.erro;
+                    novoClienteVM.Alert = "Erro ao inserir";
+                    return View(novoClienteVM);
             }
-            catch
+            catch(Exception ex)
             {
+                novoClienteVM.Tipo = TipoAlerta.erro;
+                novoClienteVM.Alert = ex.ToString();
                 return View(novoClienteVM);
             }
         }
-
 
         // GET: ClienteController/Edit/5
         public ActionResult Edit(int id)
@@ -81,16 +92,26 @@ namespace LocadoraDeCarros.Controllers
         {
             try
             {
-                var clienteEditar = _mapper.Map<Cliente>(clienteEditarVM);
-                if (_clienteService.EditarCliente(clienteEditar))
+                if(ModelState.IsValid)
                 {
-                    return RedirectToAction(nameof(Index));
+                    var clienteEditar = _mapper.Map<Cliente>(clienteEditarVM);
+                    if (_clienteService.EditarCliente(clienteEditar))
+                    {
+
+                        clienteEditarVM.Tipo = TipoAlerta.sucesso;
+                        clienteEditarVM.Alert = "Editado com sucesso";
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
                 else
+                    clienteEditarVM.Tipo = TipoAlerta.erro;
+                    clienteEditarVM.Alert = "Erro ao editar cliente";
                     return View(clienteEditarVM);
             }
-            catch
+            catch(Exception ex)
             {
+                clienteEditarVM.Tipo = TipoAlerta.erro;
+                clienteEditarVM.Alert = ex.ToString();
                 return View(clienteEditarVM);
             }
         }
@@ -111,15 +132,21 @@ namespace LocadoraDeCarros.Controllers
             try
             {
                 var clienteDeletar = _mapper.Map<Cliente>(clienteDeletarVM);
-                if (_clienteService.DeletarCliente(clienteDeletar.Id))
+                if (_clienteService.DeletarCliente(clienteDeletar))
                 {
+                    clienteDeletarVM.Alert = "Deletado com sucesso";
+                    clienteDeletarVM.Tipo = TipoAlerta.sucesso;
                     return RedirectToAction(nameof(Index));
-                }
+                }          
                 else
+                    clienteDeletarVM.Alert = "Erro ao deletar o cliente";
+                    clienteDeletarVM.Tipo = TipoAlerta.erro;
                     return View(clienteDeletarVM);
             }
-            catch
+            catch(Exception ex)
             {
+                clienteDeletarVM.Alert = ex.ToString();
+                clienteDeletarVM.Tipo = TipoAlerta.erro;
                 return View(clienteDeletarVM);
             }
         }

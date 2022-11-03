@@ -17,6 +17,6 @@ namespace Negocio.ServicoNegocio.Base
 
         bool EditarCliente(Cliente clienteEditar);
 
-        bool DeletarCliente(int id);
+        bool DeletarCliente(Cliente clienteDeletar);
     }
 }

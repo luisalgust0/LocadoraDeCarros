@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Dados.Models;
 using LocadoraDeCarros.Models;
+using LocadoraDeCarros.Models.Base;
 using Negocio.Models;
 
 namespace LocadoraDeCarros.AutoMapperProfile
@@ -15,8 +16,6 @@ namespace LocadoraDeCarros.AutoMapperProfile
         {
             CreateMap<Cliente, ClienteModel>().ReverseMap();
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
-            CreateMap<List<Cliente>, List<ClienteModel>>().ReverseMap();
-            CreateMap<List<Cliente>, List<ClienteViewModel>>().ReverseMap();
         }
     }
 }

@@ -10,10 +10,10 @@ namespace Dados.Contexts
     {
             public LocadoraDbContext(DbContextOptions options) : base(options)
             {
-
+                this.Database.SetConnectionString("Server=localhost;Initial Catalog=locadoraDB;User Id=sa;Password=Gorilla22!;");
             }
 
-            // public DbSet<ClienteModel> Cliente { get; set; }
+             public DbSet<ClienteModel> Cliente { get; set; }
       
     }
 
