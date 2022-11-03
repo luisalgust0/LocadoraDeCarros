@@ -34,12 +34,6 @@ namespace Negocio.Models
             _clienteServico = clienteServico;
         }
 
-        //metodos
-        public bool EmailEstaDuplicado()
-        {
-            return _clienteServico.ObterClientePorEmail(Email) != null;
-        }
-
     }
 
 }

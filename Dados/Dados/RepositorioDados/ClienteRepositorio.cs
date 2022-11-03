@@ -44,11 +44,6 @@ namespace Dados.RepositorioDados
             return true;
         }
 
-        public Cliente ObterClientePorEmail(string email)
-        {
-            return _mapper.Map<Cliente>(_context.Cliente.FirstOrDefault(cliente => cliente.Email == email));
-        }
-
         public Cliente ObterClientePorId(int id)
         {            
             return _mapper.Map<Cliente>(_context.Cliente.FirstOrDefault(cliente => cliente.Id == id));
@@ -57,6 +52,19 @@ namespace Dados.RepositorioDados
         public List<Cliente> ObterListaCliente()
         {
             return _mapper.Map<List<Cliente>>(_context.Cliente.AsEnumerable());
+        }
+
+        public bool VerificarEmailExiste(string email)
+        {
+            return _context.Cliente.Any(cliente => cliente.Email == email);
+        }
+        public bool VerificarCarteiraMotoristaExiste(string carteiraMotorista) 
+        {
+            return _context.Cliente.Any(cliente => cliente.CarteiraDeMotorista == carteiraMotorista);
+        }
+        public bool VerificarNomeExiste(string nome)
+        {
+            return _context.Cliente.Any(cliente => cliente.Nome == nome);
         }
     }
 }

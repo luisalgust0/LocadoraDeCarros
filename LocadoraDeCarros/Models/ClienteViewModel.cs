@@ -17,6 +17,7 @@ namespace LocadoraDeCarros.Models
         public string Email { get; set; }
         public int Telefone { get; set; }
         public string Endereco { get; set; }
+        [Required]
         public string CartaoDeCredito { get; set; }
         [Required]
         [MinLength(11)]

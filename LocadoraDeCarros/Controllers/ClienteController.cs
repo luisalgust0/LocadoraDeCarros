@@ -73,7 +73,7 @@ namespace LocadoraDeCarros.Controllers
             catch(Exception ex)
             {
                 novoClienteVM.Tipo = TipoAlerta.erro;
-                novoClienteVM.Alert = ex.ToString();
+                novoClienteVM.Alert = ex.Message;
                 return View(novoClienteVM);
             }
         }
@@ -111,7 +111,7 @@ namespace LocadoraDeCarros.Controllers
             catch(Exception ex)
             {
                 clienteEditarVM.Tipo = TipoAlerta.erro;
-                clienteEditarVM.Alert = ex.ToString();
+                clienteEditarVM.Alert = ex.Message;
                 return View(clienteEditarVM);
             }
         }

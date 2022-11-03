@@ -7,8 +7,6 @@ namespace Negocio.ServicoNegocio.Base
 {
     public interface IClienteServico
     {
-        Cliente ObterClientePorEmail(string email);
-
         Cliente ObterClientePorId(int id);
 
         List<Cliente> ObterListaCliente();

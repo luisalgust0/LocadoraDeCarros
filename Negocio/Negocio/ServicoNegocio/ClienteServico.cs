@@ -2,6 +2,7 @@
 using Negocio.RepositorioNegocio;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Negocio.ServicoNegocio.Base
@@ -27,12 +28,19 @@ namespace Negocio.ServicoNegocio.Base
 
         public bool InserirCliente(Cliente novoCliente)
         {
+            if(_clienteRepositorio.VerificarNomeExiste(novoCliente.Nome))
+            {
+                throw new Exception("Nome já existente");
+            }
+            else if(_clienteRepositorio.VerificarCarteiraMotoristaExiste(novoCliente.CarteiraDeMotorista))
+            {
+                throw new Exception("Carteira Motorista existente");
+            }
+            else if(_clienteRepositorio.VerificarEmailExiste(novoCliente.Email))
+            {
+                throw new Exception("Email existente");
+            }
             return _clienteRepositorio.InserirCliente(novoCliente);
-        }
-
-        public Cliente ObterClientePorEmail(string email)
-        {
-            return _clienteRepositorio.ObterClientePorEmail(email);
         }
 
         public Cliente ObterClientePorId(int id)

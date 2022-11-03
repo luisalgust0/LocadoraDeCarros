@@ -8,7 +8,9 @@ namespace Negocio.RepositorioNegocio
 {
     public interface IClienteRepositorio
     {
-        Cliente ObterClientePorEmail(string email);
+        bool VerificarEmailExiste(string email);
+        bool VerificarNomeExiste(string nome);
+        bool VerificarCarteiraMotoristaExiste(string carteiraMotorista);
         Cliente ObterClientePorId(int id);
         List<Cliente> ObterListaCliente();
         bool InserirCliente(Cliente novoCliente);
