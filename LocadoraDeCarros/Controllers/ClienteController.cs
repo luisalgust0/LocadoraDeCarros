@@ -56,12 +56,10 @@ namespace LocadoraDeCarros.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var novoCliente = _mapper.Map<Cliente>(novoClienteVM);
+                    Cliente novoCliente = _mapper.Map<Cliente>(novoClienteVM);
 
                     if (_clienteService.InserirCliente(novoCliente))
                     {
-                        novoClienteVM.Tipo = TipoAlerta.sucesso;
-                        novoClienteVM.Alert = "Inserido com sucesso";
                         return RedirectToAction(nameof(Index));
                     }
                 }

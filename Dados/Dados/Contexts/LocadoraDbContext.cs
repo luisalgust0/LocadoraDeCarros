@@ -14,6 +14,7 @@ namespace Dados.Contexts
             }
 
              public DbSet<ClienteModel> Cliente { get; set; }
+             public DbSet<TelefoneModel> Telefone { get; set; }
       
     }
 

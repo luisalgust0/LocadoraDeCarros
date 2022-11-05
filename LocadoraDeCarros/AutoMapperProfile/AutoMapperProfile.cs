@@ -16,6 +16,7 @@ namespace LocadoraDeCarros.AutoMapperProfile
         {
             CreateMap<Cliente, ClienteModel>().ReverseMap();
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
+            CreateMap<Telefone, TelefoneModel>().ReverseMap();
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Dados.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Negocio.ServicoNegocio;
 
 namespace LocadoraDeCarros
 {
@@ -32,6 +33,8 @@ namespace LocadoraDeCarros
             services.AddControllersWithViews();
             services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
             services.AddScoped<IClienteServico, ClienteServico>();
+            services.AddScoped<ITelefoneRepositorio, TelefoneRepositorio>();
+            services.AddScoped<ITelefoneServico, TelefoneServico>();
             services.AddAutoMapper(typeof(Startup));
 
             services.AddDbContext<LocadoraDbContext>(options =>
